@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Iron Sentinel",
+    "realName": "Arjun Malhotra",
+    "power": "Powered Armor",
+    "affiliation": "Tech Guard",
+    "city": "Mumbai",
+    "stats": {
+      "strength": 85,
+      "speed": 60,
+      "intelligence": 95,
+      "durability": 90
+    },
+    "image": "https://i.pravatar.cc/300?img=1",
+    "isActive": true
+  },
+  {
+    "id": 2,
+    "name": "Shadow Viper",
+    "realName": "Riya Khanna",
+    "power": "Stealth & Poison",
+    "affiliation": "Night Ops",
+    "city": "Delhi",
+    "stats": {
+      "strength": 65,
+      "speed": 90,
+      "intelligence": 80,
+      "durability": 55
+    },
+    "image": "https://i.pravatar.cc/300?img=2",
+    "isActive": true
+  },
+  {
+    "id": 3,
+    "name": "Thunder Monk",
+    "realName": "Dev Shenoy",
+    "power": "Electrokinesis",
+    "affiliation": "Storm Order",
+    "city": "Bengaluru",
+    "stats": {
+      "strength": 88,
+      "speed": 75,
+      "intelligence": 70,
+      "durability": 85
+    },
+    "image": "https://i.pravatar.cc/300?img=3",
+    "isActive": false
+  },
+  {
+    "id": 4,
+    "name": "Astra",
+    "realName": "Meera Iyer",
+    "power": "Cosmic Energy",
+    "affiliation": "Celestial Force",
+    "city": "Chennai",
+    "stats": {
+      "strength": 92,
+      "speed": 85,
+      "intelligence": 88,
+      "durability": 90
+    },
+    "image": "https://i.pravatar.cc/300?img=4",
+    "isActive": true
+  },
+  {
+    "id": 5,
+    "name": "Blaze Fang",
+    "realName": "Kunal Verma",
+    "power": "Fire Manipulation",
+    "affiliation": "Inferno Squad",
+    "city": "Jaipur",
+    "stats": {
+      "strength": 80,
+      "speed": 70,
+      "intelligence": 65,
+      "durability": 78
+    },
+    "image": "https://i.pravatar.cc/300?img=5",
+    "isActive": true
+  },
+  {
+    "id": 6,
+    "name": "Frost Veil",
+    "realName": "Ananya Roy",
+    "power": "Cryokinesis",
+    "affiliation": "Arctic Watch",
+    "city": "Shimla",
+    "stats": {
+      "strength": 72,
+      "speed": 68,
+      "intelligence": 82,
+      "durability": 75
+    },
+    "image": "https://i.pravatar.cc/300?img=6",
+    "isActive": false
+  },
+  {
+    "id": 7,
+    "name": "GravityX",
+    "realName": "Rohit Mehra",
+    "power": "Gravity Control",
+    "affiliation": "Quantum League",
+    "city": "Pune",
+    "stats": {
+      "strength": 90,
+      "speed": 65,
+      "intelligence": 88,
+      "durability": 92
+    },
+    "image": "https://i.pravatar.cc/300?img=7",
+    "isActive": true
+  },
+  {
+    "id": 8,
+    "name": "Neon Pulse",
+    "realName": "Sara Khan",
+    "power": "Light Speed Movement",
+    "affiliation": "Velocity Core",
+    "city": "Hyderabad",
+    "stats": {
+      "strength": 60,
+      "speed": 98,
+      "intelligence": 75,
+      "durability": 55
+    },
+    "image": "https://i.pravatar.cc/300?img=8",
+    "isActive": true
+  },
+  {
+    "id": 9,
+    "name": "Stone Titan",
+    "realName": "Vikram Rao",
+    "power": "Rock Manipulation",
+    "affiliation": "Earth Guard",
+    "city": "Mysuru",
+    "stats": {
+      "strength": 95,
+      "speed": 40,
+      "intelligence": 60,
+      "durability": 98
+    },
+    "image": "https://i.pravatar.cc/300?img=9",
+    "isActive": true
+  },
+  {
+    "id": 10,
+    "name": "Mindweaver",
+    "realName": "Ishaan Kapoor",
+    "power": "Telepathy",
+    "affiliation": "Psi Council",
+    "city": "Kolkata",
+    "stats": {
+      "strength": 55,
+      "speed": 50,
+      "intelligence": 98,
+      "durability": 60
+    },
+    "image": "https://i.pravatar.cc/300?img=10",
+    "isActive": false
+  }
+]
