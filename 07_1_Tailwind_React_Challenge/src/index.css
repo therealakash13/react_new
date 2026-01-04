@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Lexend:wght@100..900&display=swap");
+@import "tailwindcss";
+@theme {
+  --font-DMSerif: "DM Serif Text", serif;
+  --font-Lexend: "Lexend", sans-serif;
+}
