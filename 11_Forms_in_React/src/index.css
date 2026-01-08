@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+  padding-block: 30px;
+  background-color: gainsboro;
+  color: darkgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input,
+button {
+  padding-block: 20px;
+  padding-inline: 50px;
+  font-size: 80px;
+  border-radius: 10px;
+  border: none;
+}
+
+button{
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
