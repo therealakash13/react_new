@@ -23,7 +23,7 @@ export default function Card(props) {
   }
 
   return (
-    <div className="card bg-accent w-xs h-64 px-5 py-3 flex flex-col justify-between rounded-2xl ">
+    <div className="bg-accent w-xs h-64 px-5 py-3 flex flex-col justify-between rounded-2xl ">
       <div className="border-b pb-1.5 border-border">
         <h3 className="text-md pb-0.5 font-light">{createTime}</h3>
         <div className=" flex justify-between items-center">

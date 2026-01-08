@@ -74,4 +74,8 @@
     width:20px;
     height: 20px;
   }
+
+  .main::-webkit-scrollbar{
+    display: none;
+  }
 }
