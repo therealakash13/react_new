@@ -86,3 +86,5 @@ export default function App() {
     </div>
   );
 }
+
+// Add Note creation (modal) functionality
