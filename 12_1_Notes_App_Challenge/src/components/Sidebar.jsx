@@ -1,6 +1,26 @@
-import { NotePen, Add, Calender, Archive, Trash } from "../assets/SVGComponents";
+import {
+  NotePen,
+  Add,
+  Calender,
+  Archive,
+  Trash,
+} from "../assets/SVGComponents";
 
-export default function Sidebar() {
+export default function Sidebar(props) {
+
+  const handleClick = (e) => {
+    const selection = e.target.innerText;
+
+    switch (selection) {
+      case "Add Note":
+        props.handleAdd();
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="w-1/6 h-full p-6 pb-0 flex flex-col justify-between">
       <div>
@@ -11,25 +31,28 @@ export default function Sidebar() {
         </div>
         <div className="mt-10">
           <ul className="sidebar-list font-inter font-medium">
-            <li className="gap-3">
+            <li className="gap-3" onClick={handleClick}>
               <Add className="icon" />
               Add Note
             </li>
-            <li className="gap-3">
+            <li className="gap-3" onClick={handleClick}>
               <Calender className="icon" />
               Calender
             </li>
-            <li className="gap-3">
+            <li className="gap-3" onClick={handleClick}>
               <Archive className="icon" /> Archive
             </li>
-            <li className="gap-3">
+            <li className="gap-3" onClick={handleClick}>
               <Trash className="icon" /> Trash
             </li>
           </ul>
         </div>
       </div>
       <div className="overflow-hidden rounded-2xl">
-        <img src="https://plus.unsplash.com/premium_vector-1732660552503-80f0bd206ac1?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+        <img
+          src="https://plus.unsplash.com/premium_vector-1732660552503-80f0bd206ac1?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt=""
+        />
       </div>
     </div>
   );

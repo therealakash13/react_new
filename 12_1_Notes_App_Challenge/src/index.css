@@ -78,4 +78,24 @@
   .main::-webkit-scrollbar{
     display: none;
   }
+
+  .modal{
+    position: absolute;
+    margin-inline: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: var(--color-surface); */
+    border-radius: 16px;
+    padding-block: 25px;
+    padding-inline: 30px;
+    transition: all .3s ease-in-out;
+  }
+
+  .inner-modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

@@ -162,4 +162,32 @@ const Edit = (props) => (
   </svg>
 );
 
-export { NotePen, Add, Calender, Archive, Trash, Search, Menu, Timer, Edit };
+const Close = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="lucide lucide-x-icon lucide-x"
+    {...props}
+  >
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+);
+
+const ColorCircle = (props) => (
+  <svg
+    viewBox="0 0 15 15"
+    id="circle"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z" />
+  </svg>
+);
+
+export { NotePen, Add, Calender, Archive, Trash, Search, Menu, Timer, Edit, Close, ColorCircle };
