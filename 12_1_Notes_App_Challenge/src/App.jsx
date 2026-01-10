@@ -3,14 +3,27 @@ import AddNoteModal from "./components/AddNoteModal";
 import Main from "./components/Main";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import EditNoteModal from "./components/EditNoteModal";
 
 export default function App() {
-  const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [editNote, setEditNote] = useState({});
+  const [editIndex, setEditIndex] = useState(0);
 
   const handleAddModal = () => {
-    if (!showModal) setShowModal(true);
-    else setShowModal(false);
+    if (!showAddModal) setShowAddModal(true);
+    else setShowAddModal(false);
+  };
+
+  const handleEditModal = () => {
+    if (!showEditModal) setShowEditModal(true);
+    else setShowEditModal(false);
+  };
+
+  const handleDeleteNote = (id) => {
+    setNotes((prevNotes) => prevNotes.filter((val, index) => index !== id));
   };
 
   // const notesData = [
@@ -87,8 +100,21 @@ export default function App() {
   // ];
 
   const handleAddData = (data) => {
-    console.log(data);
     setNotes((prev) => [...prev, data]);
+  };
+
+  const handleEditNote = (id) => {
+    handleEditModal();
+    setEditIndex(id);
+    setEditNote(notes[id]);
+  };
+
+  const handleEditData = (data) => {
+    setNotes((prev) => {
+      const updated = [...prev];
+      updated[editIndex] = { ...updated[editIndex], ...data };
+      return updated;
+    });
   };
 
   return (
@@ -97,16 +123,26 @@ export default function App() {
         <Sidebar handleAdd={handleAddModal} />
         <div className="flex-1 h-full flex flex-col">
           <Navbar />
-          <Main notes={notes} />
+          <Main
+            notes={notes}
+            handleDelete={handleDeleteNote}
+            handleEdit={handleEditNote}
+          />
         </div>
         <AddNoteModal
-          modalState={showModal}
+          modalState={showAddModal}
           handleModal={handleAddModal}
           handleData={handleAddData}
+        />
+        <EditNoteModal
+          noteData={editNote}
+          modalState={showEditModal}
+          handleModal={handleEditModal}
+          handleData={handleEditData}
         />
       </div>
     </div>
   );
 }
 
-// Edit Note (modal) functionality
+// Refactor Edit and Add Modal

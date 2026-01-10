@@ -1,4 +1,4 @@
-import { Edit, Timer } from "../assets/SVGComponents";
+import { Delete, Edit, Timer } from "../assets/SVGComponents";
 
 export default function Card(props) {
   const createTime = isoToLocale(props.created);
@@ -31,14 +31,29 @@ export default function Card(props) {
         <h3 className="text-md pb-0.5 font-light">{createTime}</h3>
         <div className=" flex justify-between items-center">
           <h2 className="text-2xl font-medium truncate">{props.title}</h2>
-          <Edit className="card-icon cursor-pointer" />
+          <Edit
+            className="card-icon cursor-pointer"
+            onClick={() => {
+              props.handleEdit(props.id);
+            }}
+          />
         </div>
       </div>
       <p className="text-sm font-inter text-primary opacity-80 overflow-y-hidden">
         {preview}
       </p>
-      <h3 className="flex items-center gap-1 font-light">
-        <Timer className="card-icon" /> {updateTime}
+      <h3 className="flex justify-between gap-1 items-center font-light">
+        <div className="flex gap-1">
+          <Timer className="card-icon" /> {updateTime}
+        </div>
+        <Delete
+          className="card-icon cursor-pointer"
+          stroke={"oklch(39.6% 0.141 25.723)"}
+          fill={"none"}
+          onClick={() => {
+            props.handleDelete(props.id);
+          }}
+        />
       </h3>
     </div>
   );

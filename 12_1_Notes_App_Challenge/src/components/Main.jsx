@@ -20,11 +20,14 @@ export default function Main(props) {
           notes.map((note, idx) => (
             <Card
               key={idx}
+              id={idx}
               created={note.dateCreated}
               title={note.title}
               content={note.content}
               updated={note.timeLastUpdated}
               accent={note.accent}
+              handleDelete={props.handleDelete}
+              handleEdit={props.handleEdit}
             />
           ))
         )}

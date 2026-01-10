@@ -1,15 +1,27 @@
-import { useState } from "react";
-import { Close, ColorCircle, Plus } from "../assets/SVGComponents";
+import { useEffect, useState } from "react";
+import { Close, ColorCircle, EditPen } from "../assets/SVGComponents";
 
-export default function AddNoteModal(props) {
+export default function EditNoteModal(props) {
   const modalState = props.modalState;
+  const noteData = props.noteData;
+
   const [modalColor, setModalColor] = useState("hsl(240, 6%, 10%)");
   //   const [activeColor,setActiveColor] = useState()
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [accent, setAccent] = useState("hsl(240, 6%, 10%)");
+  const [accent, setAccent] = useState("");
 
   const colorOptions = ["#18181b", "#387567", "#c3a622", "#605463", "#c91d81"];
+
+  useEffect(() => {
+    if (modalState && noteData) {
+      setTitle(noteData.title ?? "");
+      setContent(noteData.content ?? "");
+      setAccent(noteData.accent ?? "hsl(240, 6%, 10%)");
+    }
+  }, [noteData, modalState]);
+
+  if (!modalState) return null;
 
   const handleColorChange = (color) => {
     setModalColor(color);
@@ -18,16 +30,15 @@ export default function AddNoteModal(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title && !content) alert("Title or Content field cant be empty");
+    if (!title && !content)
+      return alert("Title or Content field cant be empty");
     props.handleData({
+      ...noteData,
       title,
       content,
-      dateCreated: new Date().toISOString(),
       timeLastUpdated: new Date().toISOString(),
       accent,
     });
-    setTitle("");
-    setContent("");
     props.handleModal();
   };
 
@@ -50,7 +61,7 @@ export default function AddNoteModal(props) {
           onClick={handleClose}
         />
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl">Add Note</h1>
+          <h1 className="text-4xl">Edit Note</h1>
           <input
             type="text"
             placeholder="Title"
@@ -80,11 +91,11 @@ export default function AddNoteModal(props) {
               })}
             </div>
             <button
-              className="flex gap-1 bg-accent px-3 py-2 rounded-md font-semibold text-xl w-fit cursor-pointer"
+              className="bg-accent px-4 py-2 flex gap-1.5 rounded-md font-semibold text-xl w-fit cursor-pointer"
               onClick={handleSubmit}
             >
-              <Plus className="icon" />
-              Add
+              <EditPen className="icon" />
+              Edit
             </button>
           </div>
         </div>

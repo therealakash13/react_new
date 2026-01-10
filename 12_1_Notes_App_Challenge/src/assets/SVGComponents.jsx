@@ -190,4 +190,68 @@ const ColorCircle = (props) => (
   </svg>
 );
 
-export { NotePen, Add, Calender, Archive, Trash, Search, Menu, Timer, Edit, Close, ColorCircle };
+const Delete = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="lucide lucide-badge-x-icon lucide-badge-x"
+    {...props}
+  >
+    <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+    <line x1="15" x2="9" y1="9" y2="15" />
+    <line x1="9" x2="15" y1="9" y2="15" />
+  </svg>
+);
+
+const Plus = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="lucide lucide-plus-icon lucide-plus"
+    {...props}
+  >
+    <path d="M5 12h14" />
+    <path d="M12 5v14" />
+  </svg>
+);
+
+const EditPen = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="lucide lucide-pen-line-icon lucide-pen-line"
+    {...props}
+  >
+    <path d="M13 21h8" />
+    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+  </svg>
+);
+
+export {
+  NotePen,
+  Add,
+  Calender,
+  Archive,
+  Trash,
+  Search,
+  Menu,
+  Timer,
+  Edit,
+  Close,
+  ColorCircle,
+  Delete,
+  Plus,
+  EditPen,
+};
