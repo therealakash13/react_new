@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-export default function LoginForm(props) {
-      const [email, setEmail] = useState("");
+export default function LoginForm() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { loginHandler } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.loginHandler(email, password);
+    loginHandler(email, password);
     setEmail("");
     setPassword("");
   };

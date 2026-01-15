@@ -1,9 +1,9 @@
 import LoginForm from "./LoginForm";
 
-export default function Login(props) {
+export default function Login() {
   return (
     <div className="flex items-center justify-center h-full">
-      <LoginForm loginHandler={props.loginHandler} />
+      <LoginForm />
     </div>
   );
 }

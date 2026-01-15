@@ -38,7 +38,14 @@ export const employees = [
         failed: false,
       },
     ],
+    taskCount: {
+      active: 2,
+      new: 1,
+      completed: 1,
+      failed: 0,
+    },
   },
+
   {
     id: 2,
     email: "employee2@example.com",
@@ -78,7 +85,14 @@ export const employees = [
         failed: true,
       },
     ],
+    taskCount: {
+      active: 1,
+      new: 1,
+      completed: 1,
+      failed: 1,
+    },
   },
+
   {
     id: 3,
     email: "employee3@example.com",
@@ -118,7 +132,14 @@ export const employees = [
         failed: true,
       },
     ],
+    taskCount: {
+      active: 1,
+      new: 1,
+      completed: 1,
+      failed: 1,
+    },
   },
+
   {
     id: 4,
     email: "employee4@example.com",
@@ -158,7 +179,14 @@ export const employees = [
         failed: true,
       },
     ],
+    taskCount: {
+      active: 1,
+      new: 0,
+      completed: 1,
+      failed: 1,
+    },
   },
+
   {
     id: 5,
     email: "employee5@example.com",
@@ -198,6 +226,12 @@ export const employees = [
         failed: true,
       },
     ],
+    taskCount: {
+      active: 1,
+      new: 1,
+      completed: 1,
+      failed: 1,
+    },
   },
 ];
 
