@@ -1,11 +1,11 @@
-export default function AdminTask() {
+export default function AdminTask({ employee, taskCount }) {
   return (
-    <div className="w-full bg-green-700 flex justify-between items-center px-5 py-2.5 rounded">
-      <h2 className="font-semibold text-2xl">Akash</h2>
-      <p className="font-medium text-lg">Make a website</p>
-      <button className="px-3 py-1 text-lg bg-gray-300 text-gray-700 font-semibold rounded">
-        Completed
-      </button>
+    <div className="grid grid-cols-5 text-center text-lg font-normal">
+      <p className="bg-gray-700 py-3 px-2 border-t">{employee}</p>
+      <p className="bg-cyan-800 py-3 px-2 border-t">{taskCount.new}</p>
+      <p className="bg-green-700 py-3 px-2 border-t">{taskCount.completed}</p>
+      <p className="bg-gray-100 text-gray-700 py-3 px-2 border-t">{taskCount.active}</p>
+      <p className="bg-rose-700 py-3 px-2 border-t">{taskCount.failed}</p>
     </div>
   );
 }
