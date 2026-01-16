@@ -4,7 +4,7 @@ import Header from "../Misc/Header";
 
 export default function AdminDashboard() {
   return (
-    <div className="flex flex-col h-full gap-10">
+    <div className="task-list flex flex-col h-full gap-10 overflow-y-auto">
       <Header />
       <CreateTask />
       <AdminTaskListContainer />
