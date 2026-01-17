@@ -3,7 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function Header() {
   const { user, logoutHandler } = useContext(AuthContext);
-  const userName = user.data.email;
+  const userName = user.data.employeeName;
 
   return (
     <div className="flex justify-between items-center">

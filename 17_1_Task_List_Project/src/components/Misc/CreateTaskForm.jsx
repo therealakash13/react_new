@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import { useTasks } from "../../hooks/useTask";
 
 export default function CreateTaskForm() {
-  const { handleTasks } = useContext(AuthContext);
+  const { addTask } = useTasks();
   const [assignTo, setAssignTo] = useState("");
   const [taskDetails, setTaskDetails] = useState({
     taskTitle: "",
@@ -14,7 +14,7 @@ export default function CreateTaskForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleTasks(taskDetails, assignTo);
+    addTask(taskDetails, assignTo);
     setTaskDetails({
       taskTitle: "",
       taskDescription: "",
