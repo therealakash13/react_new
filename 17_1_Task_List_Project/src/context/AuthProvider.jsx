@@ -4,43 +4,43 @@ import { getLocalStorage } from "../utils/LocalStorage";
 
 export default function AuthProvider(props) {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-
-  const sort = user?.sortBy ?? "default";
-
-  const [employeesData, setEmployeesData] = useState(() => {
-    const storedEmployees = localStorage.getItem("employees");
-    return storedEmployees ? JSON.parse(storedEmployees) : null;
+    const storedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    return storedUser ? storedUser : null;
   });
 
   const loginHandler = (email, password) => {
     const { employees, admin } = getLocalStorage();
 
     const adminData = admin.find(
-      (a) => a.email === email && a.password === password
+      (a) => a.email === email && a.password === password,
     );
 
     if (adminData) {
-      const userData = { role: "admin", data: adminData };
-      setUser(userData);
-      localStorage.setItem("loggedInUser", JSON.stringify(userData));
-      return;
+      const userData = {
+        role: "admin",
+        email: adminData.email,
+        id: adminData.id,
+        name: adminData.adminName,
+      };
+      return setUser(userData);
     }
 
     const employeeData = employees.find(
-      (e) => e.email === email && e.password === password
+      (e) => e.email === email && e.password === password,
     );
 
     if (employeeData) {
-      const userData = { role: "employee", data: employeeData, sortBy: sort };
-      setUser(userData);
-      localStorage.setItem("loggedInUser", JSON.stringify(userData));
-      return;
+      const userData = {
+        role: "employee",
+        email: employeeData.email,
+        id: employeeData.id,
+        name: employeeData.employeeName,
+        sortBy: user?.sortBy ?? "default",
+      };
+      return setUser(userData);
     }
 
-    alert("Incorrect email or password");
+    return alert("Incorrect email or password");
   };
 
   const logoutHandler = () => {
@@ -50,7 +50,7 @@ export default function AuthProvider(props) {
   };
 
   const changeSort = (value) => {
-    setUser((prev) => ({ ...prev, sortBy: value }));
+    setUser((prev) => (prev ? { ...prev, sortBy: value } : prev));
   };
 
   useEffect(() => {
@@ -65,8 +65,6 @@ export default function AuthProvider(props) {
           user,
           loginHandler,
           logoutHandler,
-          employeesData,
-          setEmployeesData,
           changeSort,
         }}
       >
@@ -75,5 +73,3 @@ export default function AuthProvider(props) {
     </div>
   );
 }
-
-// Modify, Delete and Per task handlers like accept, decline task, appeal removal and more

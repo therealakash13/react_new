@@ -5,12 +5,33 @@ import NewTask from "../Tasks/NewTask";
 import CompletedTask from "../Tasks/CompletedTask";
 import FailedTask from "../Tasks/FailedTask";
 import { taskSorter } from "../../utils/taskUtils";
+import { TaskContext } from "../../context/TaskContext";
 
 export default function TaskContainer() {
   const { user } = useContext(AuthContext);
-  const tasks = user.data.tasks;
+  const { handleTaskStatus, handleTaskRemoval, getEmployeeTasks } =
+    useContext(TaskContext);
 
+  const tasks = getEmployeeTasks(user.email, user.id);
   const sortedTasks = taskSorter(tasks, user.sortBy);
+
+  const handleRemoval = (taskId) => {
+    if (!user || user.role !== "employee") {
+      alert("Unauthorized.");
+      return;
+    }
+
+    handleTaskRemoval(user.email, taskId);
+  };
+
+  const handleStatus = (taskId, status) => {
+    if (!user || user.role !== "employee") {
+      alert("Unauthorized.");
+      return;
+    }
+
+    handleTaskStatus(user.email, taskId, status);
+  };
 
   return (
     <div className="task-list flex-1 flex items-center flex-nowrap overflow-x-auto gap-5 w-full">
@@ -19,52 +40,64 @@ export default function TaskContainer() {
           case "active":
             return (
               <ActiveTask
-                key={idx}
+                key={task.id ?? idx}
+                id={task.id}
                 title={task.taskTitle}
                 description={task.taskDescription}
                 priority={task.taskPriority}
-                date={task.creationDate}
+                date={task.dueDate}
                 category={task.category}
                 status={task.status}
+                handleStatus={handleStatus}
               />
             );
 
           case "new":
             return (
               <NewTask
-                key={idx}
+                key={task.id ?? idx}
+                id={task.id}
                 title={task.taskTitle}
                 description={task.taskDescription}
                 priority={task.taskPriority}
-                date={task.creationDate}
+                date={task.dueDate}
                 category={task.category}
                 status={task.status}
+                handleStatus={handleStatus}
               />
             );
 
           case "completed":
             return (
               <CompletedTask
-                key={idx}
+                key={task.id ?? idx}
+                id={task.id}
                 title={task.taskTitle}
                 description={task.taskDescription}
                 priority={task.taskPriority}
-                date={task.creationDate}
+                date={task.dueDate}
                 category={task.category}
                 status={task.status}
+                handleRemoval={handleRemoval}
+                isRequested={task.removalRequested}
+                requestedAt={task.removalRequestedAt}
               />
             );
 
           case "failed":
             return (
               <FailedTask
-                key={idx}
+                key={task.id ?? idx}
+                id={task.id}
                 title={task.taskTitle}
                 description={task.taskDescription}
                 priority={task.taskPriority}
-                date={task.creationDate}
+                date={task.dueDate}
                 category={task.category}
                 status={task.status}
+                handleRemoval={handleRemoval}
+                isRequested={task.removalRequested}
+                requestedAt={task.removalRequestedAt}
               />
             );
           default:

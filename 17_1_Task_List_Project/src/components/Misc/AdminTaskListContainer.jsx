@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import AdminTask from "./AdminTask";
-import { AuthContext } from "../../context/AuthContext";
+import { TaskContext } from "../../context/TaskContext";
 
 export default function AdminTaskListContainer() {
-  const { employeesData } = useContext(AuthContext);
+  const { employeesData, getTaskCount } = useContext(TaskContext);
 
   return (
     <div className="flex-1 flex flex-col">
@@ -17,8 +17,8 @@ export default function AdminTaskListContainer() {
       {employeesData.map((employee, idx) => (
         <AdminTask
           key={idx}
-          employee={employee.email}
-          taskCount={employee.taskCount}
+          employee={employee.employeeName}
+          taskCount={getTaskCount(employee.email)}
         />
       ))}
     </div>

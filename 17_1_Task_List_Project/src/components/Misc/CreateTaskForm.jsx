@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { useTasks } from "../../hooks/useTask";
+import { useContext, useState } from "react";
+import { TaskContext } from "../../context/TaskContext";
 
 export default function CreateTaskForm() {
-  const { addTask } = useTasks();
+  const { addTask } = useContext(TaskContext);
   const [assignTo, setAssignTo] = useState("");
   const [taskDetails, setTaskDetails] = useState({
     taskTitle: "",
     taskDescription: "",
     taskPriority: "",
     category: "",
-    creationDate: "",
+    dueDate: "",
   });
 
   const handleSubmit = (e) => {
@@ -20,7 +20,7 @@ export default function CreateTaskForm() {
       taskDescription: "",
       taskPriority: "",
       category: "",
-      creationDate: "",
+      dueDate: "",
     });
     setAssignTo("");
   };
@@ -52,12 +52,12 @@ export default function CreateTaskForm() {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <h3 className="text-gray-300 font-medium">Date</h3>
+          <h3 className="text-gray-300 font-medium">Due Date</h3>
           <input
             type="date"
-            name="creationDate"
+            name="dueDate"
             className="border px-3 py-1 rounded outline-none text-xl w-4/5"
-            value={taskDetails.creationDate}
+            value={taskDetails.dueDate}
             onChange={(e) => handleChange(e)}
           />
         </div>

@@ -19,6 +19,12 @@ export default function Sorter() {
         >
           Type
         </button>
+        <button
+          onClick={() => changeSort("dueDate")}
+          className="px-5 py-1 bg-gray-500 rounded-2xl text-lg cursor-pointer"
+        >
+          Due Date
+        </button>
       </div>
     </div>
   );
