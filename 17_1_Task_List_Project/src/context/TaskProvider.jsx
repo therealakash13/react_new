@@ -90,10 +90,10 @@ export const TaskProvider = (props) => {
     );
   };
 
-  const approveTaskRemoval = (employeeEmail, taskId) => {
+  const approveTaskRemoval = (email, taskId) => {
     setEmployeesData((prev) =>
       prev.map((emp) =>
-        emp.email === employeeEmail
+        emp.email === email
           ? {
               ...emp,
               tasks: emp.tasks.filter(
