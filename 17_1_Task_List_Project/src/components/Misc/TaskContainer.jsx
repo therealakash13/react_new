@@ -34,7 +34,7 @@ export default function TaskContainer() {
   };
 
   return (
-    <div className="task-list flex-1 flex items-center flex-nowrap overflow-x-auto gap-5 w-full">
+    <div className="task-list flex-1 flex items-center flex-nowrap overflow-x-auto gap-5 w-full px-4">
       {sortedTasks.map((task, idx) => {
         switch (task.status) {
           case "active":
