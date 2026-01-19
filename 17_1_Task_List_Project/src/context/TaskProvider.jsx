@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 export const TaskProvider = (props) => {
   const [employeesData, setEmployeesData] = useState(() => {
     const storedEmployees = localStorage.getItem("employees");
-    return storedEmployees ? JSON.parse(storedEmployees) : null;
+    return storedEmployees ? JSON.parse(storedEmployees) : [];
   });
 
   const addTask = (taskDetails, assignTo) => {
@@ -17,7 +17,7 @@ export const TaskProvider = (props) => {
       );
 
       if (!employeeExists) {
-        alert("No such employee exists.");
+        alert("No such employee exists."); // ui should handle it.
         return prevEmployees;
       }
 
@@ -31,12 +31,8 @@ export const TaskProvider = (props) => {
           creationDate: new Date().toISOString().split("T")[0],
         };
 
-        const isValidDueDate =
-          new Date(newTask.dueDate) >= new Date(newTask.creationDate);
-
-        if (!isValidDueDate) {
-          alert("Due date can't be before creation date.");
-          return emp;
+        if (new Date(newTask.dueDate) < new Date(newTask.creationDate)) {
+          return emp; // UI should show toast
         }
 
         const updatedTasks = [...emp.tasks, newTask];
@@ -51,8 +47,6 @@ export const TaskProvider = (props) => {
 
         return { ...emp, tasks: updatedTasks, taskCount };
       });
-
-      localStorage.setItem("employees", JSON.stringify(updatedEmployees));
       return updatedEmployees;
     });
   };
@@ -175,5 +169,3 @@ export const TaskProvider = (props) => {
     </div>
   );
 };
-
-// Modify, Delete and Per task handlers like accept, decline task, appeal removal and more
