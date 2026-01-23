@@ -1,4 +1,5 @@
 export default function RemovalRequests({ list, handleRemoval }) {
+
   return (
     <div className="flex flex-col gap-2 bg-gray-700 px-5 py-3 rounded">
       <div className=" flex flex-col gap-5">
@@ -23,7 +24,7 @@ export default function RemovalRequests({ list, handleRemoval }) {
 
           <div className="flex justify-around">
             <button
-              onClick={() => handleRemoval(req.employeeEmail, req.taskId)}
+              onClick={() => handleRemoval(req.employeeId, req.taskId)}
               className="px-3 py-1 text-sm rounded-full bg-green-800 cursor-pointer"
             >
               Approve

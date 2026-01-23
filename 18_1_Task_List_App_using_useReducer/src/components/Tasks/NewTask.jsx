@@ -1,3 +1,4 @@
+import { TASK_STATUS } from "../../context/statuses";
 import { getPriorityColor } from "../../utils/colorUtils";
 
 export default function NewTask({
@@ -35,13 +36,13 @@ export default function NewTask({
 
       <div className="flex justify-around items-center">
         <button
-          onClick={() => handleStatus(id, "active")}
+          onClick={() => handleStatus(id, TASK_STATUS.ACTIVE)}
           className="w-1/2 px-5 py-1 text-lg bg-green-800 opacity-95 border-2 border-gray-700 rounded-l-2xl cursor-pointer font-medium text-gray-50"
         >
           Accept
         </button>
         <button
-          onClick={() => handleStatus(id, "failed")}
+          onClick={() => handleStatus(id, TASK_STATUS.FAILED)}
           className="w-1/2 px-5 py-1 text-lg bg-rose-800 opacity-95 border-2 border-gray-700 rounded-r-2xl cursor-pointer font-medium text-gray-50"
         >
           Reject

@@ -6,7 +6,8 @@ export const initialState = {
     currentUser: JSON.parse(localStorage.getItem("currentUser")) || null,
   },
   admin: {
-    removalRequests: [],
+    removalRequests:
+      JSON.parse(localStorage.getItem("adminRemovalRequests")) || [],
   },
   ui: {
     sortBy: "default",

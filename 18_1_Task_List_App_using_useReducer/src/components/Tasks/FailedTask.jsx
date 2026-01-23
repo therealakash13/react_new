@@ -55,7 +55,7 @@ export default function FailedTask({
           </button>
         ) : (
           <button
-            onClick={() => handleRemoval(id)}
+            onClick={() => handleRemoval(id,title)}
             className="flex justify-center items-center gap-3 w-full px-5 py-1 text-lg bg-rose-800 border-2 border-gray-700 rounded-2xl cursor-pointer font-medium text-gray-50"
           >
             <svg

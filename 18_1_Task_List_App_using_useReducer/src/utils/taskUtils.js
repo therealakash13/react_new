@@ -1,3 +1,5 @@
+import { SORTERS } from "../context/sorters";
+
 export const taskSorter = (tasks = [], basis) => {
   const STATUS_ORDER = Object.freeze({
     new: 1,
@@ -12,22 +14,22 @@ export const taskSorter = (tasks = [], basis) => {
   });
 
   switch (basis) {
-    case "priority":
+    case SORTERS.PRIORITY:
       return [...tasks].sort(
         (a, b) =>
           PRIORITY_ORDER[a.taskPriority?.toLowerCase()] -
           PRIORITY_ORDER[b.taskPriority?.toLowerCase()],
       );
 
-    case "type":
+    case SORTERS.TYPE:
       return [...tasks].sort(
         (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status],
       );
 
-    case "default":
+    case SORTERS.DEFAULT:
       return [...tasks];
 
-    case "dueDate":
+    case SORTERS.DUE_DATE:
       return [...tasks].sort(
         (a, b) => Date.parse(a.dueDate) - Date.parse(b.dueDate),
       );

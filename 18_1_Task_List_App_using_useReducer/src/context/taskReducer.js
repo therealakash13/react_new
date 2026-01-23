@@ -1,21 +1,22 @@
-// import { nanoid } from "nanoid";
-import { getLocalStorage } from "../utils/LocalStorage";
 import {
-  GET_REMOVAL_REQ,
-  GET_TASK_COUNT,
+  ADD_TASK,
+  APPROVE_TASK_REMOVAL,
+  CHANGE_SORT,
   LOGOUT,
   SET_CURRENT_USER,
+  SET_TASK_REMOVAL,
+  SET_TASK_STATUS,
 } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case SET_CURRENT_USER: {
-      const { employees, admin } = getLocalStorage();
 
-      const adminData = admin.find(
-        (a) =>
-          a.email === action.payload.email &&
-          a.password === action.payload.password,
+    case SET_CURRENT_USER: {
+      const { email, password } = action.payload;
+      const admins =  JSON.parse(localStorage.getItem("admin"));
+
+      const adminData = admins.find(
+        a => a.email === email && a.password === password
       );
 
       if (adminData) {
@@ -32,10 +33,8 @@ export const reducer = (state, action) => {
         };
       }
 
-      const employeeData = employees.find(
-        (e) =>
-          e.email === action.payload.email &&
-          e.password === action.payload.password,
+      const employeeData = state.tasks.employees.find(
+        e => e.email === email && e.password === password
       );
 
       if (employeeData) {
@@ -49,156 +48,145 @@ export const reducer = (state, action) => {
               name: employeeData.employeeName,
             },
           },
-          ui: {
-            sortBy: state.ui.sortBy ?? "default",
-          },
         };
       }
 
       return state;
     }
 
-    case LOGOUT: {
+    case LOGOUT:
       return {
         ...state,
         auth: { currentUser: null },
       };
-    }
 
-    case GET_REMOVAL_REQ: {
-      if (state.auth.currentUser?.role !== "admin") return state;
+    case ADD_TASK: {
+      const { assignTo, task } = action.payload;
 
-      const removalRequests = state.tasks.employees.flatMap((emp) =>
-        emp.tasks
-          .filter((task) => task.removalRequested)
-          .map((task) => ({
-            taskId: task.id,
-            taskTitle: task.taskTitle,
-            employeeEmail: emp.email,
-            employeeName: emp.employeeName,
-            requestedAt: task.removalRequestedAt,
-          })),
+      const updatedEmployees = state.tasks.employees.map(emp =>
+        emp.email.toLowerCase() === assignTo.toLowerCase()
+          ? { ...emp, tasks: [...emp.tasks, task] }
+          : emp
       );
 
       return {
         ...state,
-        admin: { removalRequests },
+        tasks: {
+          ...state.tasks,
+          employees: updatedEmployees,
+        },
       };
     }
 
+    case SET_TASK_STATUS: {
+      const { taskId, status } = action.payload;
+      const userId = state.auth.currentUser.id;
+
+      const updatedEmployees = state.tasks.employees.map(emp =>
+        emp.id !== userId
+          ? emp
+          : {
+              ...emp,
+              tasks: emp.tasks.map(t =>
+                t.id === taskId ? { ...t, status } : t
+              ),
+            }
+      );
+
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          employees: updatedEmployees,
+        },
+      };
+    }
+
+    case SET_TASK_REMOVAL: {
+      const { taskId, requestedAt, employeeId, taskTitle } = action.payload;
+
+      const updatedEmployees = state.tasks.employees.map(emp =>
+        emp.id !== employeeId
+          ? emp
+          : {
+              ...emp,
+              tasks: emp.tasks.map(t =>
+                t.id === taskId &&
+                ["completed", "failed"].includes(t.status)
+                  ? {
+                      ...t,
+                      removalRequested: true,
+                      removalRequestedAt: requestedAt,
+                    }
+                  : t
+              ),
+            }
+      );
+
+      const exists = state.admin.removalRequests.some(
+        r => r.taskId === taskId
+      );
+
+      const newRequest = {
+        taskId,
+        taskTitle,
+        employeeId,
+        employeeName: state.auth.currentUser?.name,
+        requestedAt,
+      };
+
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          employees: updatedEmployees,
+        },
+        admin: {
+          ...state.admin,
+          removalRequests: exists
+            ? state.admin.removalRequests
+            : [...state.admin.removalRequests, newRequest],
+        },
+      };
+    }
+
+    case APPROVE_TASK_REMOVAL: {
+      const { employeeId, taskId } = action.payload;
+
+      const updatedEmployees = state.tasks.employees.map(emp =>
+        emp.id !== employeeId
+          ? emp
+          : {
+              ...emp,
+              tasks: emp.tasks.filter(t => t.id !== taskId),
+            }
+      );
+
+      const updatedRequestList = state.admin.removalRequests.filter( r => r.taskId !== taskId )
+
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          employees: updatedEmployees,
+        },
+        admin:{
+          ...state.admin,
+          removalRequests: updatedRequestList
+        }
+      };
+    }
+
+    case CHANGE_SORT:
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          sortBy: action.payload.sortBy,
+        },
+      };
 
     default:
-      break;
+      return state;
   }
-
-  //   const addTask = (taskDetails, assignTo) => {
-  //     setEmployeesData((prevEmployees) => {
-  //       if (!prevEmployees) return prevEmployees;
-
-  //       const employeeExists = prevEmployees.find(
-  //         (emp) => emp.email.toLowerCase() === assignTo.toLowerCase(),
-  //       );
-
-  //       if (!employeeExists) {
-  //         alert("No such employee exists."); // ui should handle it.
-  //         return prevEmployees;
-  //       }
-
-  //       const updatedEmployees = prevEmployees.map((emp) => {
-  //         if (emp.email.toLowerCase() !== assignTo.toLowerCase()) return emp;
-
-  //         const newTask = {
-  //           ...taskDetails,
-  //           status: "new",
-  //           id: nanoid(),
-  //           creationDate: new Date().toISOString().split("T")[0],
-  //         };
-
-  //         if (new Date(newTask.dueDate) < new Date(newTask.creationDate)) {
-  //           return emp; // UI should show toast
-  //         }
-
-  //         const updatedTasks = [...emp.tasks, newTask];
-
-  //         const taskCount = {
-  //           active: updatedTasks.filter((t) => t.status === "active").length,
-  //           new: updatedTasks.filter((t) => t.status === "new").length,
-  //           completed: updatedTasks.filter((t) => t.status === "completed")
-  //             .length,
-  //           failed: updatedTasks.filter((t) => t.status === "failed").length,
-  //         };
-
-  //         return { ...emp, tasks: updatedTasks, taskCount };
-  //       });
-  //       return updatedEmployees;
-  //     });
-  //   };
-
-  //   const handleTaskStatus = (email, taskId, status) => {
-  //     setEmployeesData((prev) =>
-  //       prev.map((emp) =>
-  //         emp.email === email
-  //           ? {
-  //               ...emp,
-  //               tasks: emp.tasks.map((task) =>
-  //                 task.id === taskId ? { ...task, status } : task,
-  //               ),
-  //             }
-  //           : emp,
-  //       ),
-  //     );
-  //   };
-
-  //   const handleTaskRemoval = (email, taskId) => {
-  //     setEmployeesData((prev) =>
-  //       prev.map((emp) =>
-  //         emp.email === email
-  //           ? {
-  //               ...emp,
-  //               tasks: emp.tasks.map((task) =>
-  //                 task.id === taskId &&
-  //                 ["completed", "failed"].includes(task.status)
-  //                   ? {
-  //                       ...task,
-  //                       removalRequested: true,
-  //                       removalRequestedAt: new Date()
-  //                         .toISOString()
-  //                         .split("T")[0],
-  //                     }
-  //                   : task,
-  //               ),
-  //             }
-  //           : emp,
-  //       ),
-  //     );
-  //   };
-
-  //   const approveTaskRemoval = (email, taskId) => {
-  //     setEmployeesData((prev) =>
-  //       prev.map((emp) =>
-  //         emp.email === email
-  //           ? {
-  //               ...emp,
-  //               tasks: emp.tasks.filter(
-  //                 (task) => !(task.id === taskId && task.removalRequested),
-  //               ),
-  //             }
-  //           : emp,
-  //       ),
-  //     );
-  //   };
-
-  //   const getEmployeeTasks = (email, id) => {
-  //     const employee = employeesData.find(
-  //       (e) => e.email === email || e.id === id,
-  //     );
-  //     if (!employee) return [];
-  //     return employee.tasks;
-  //   };
-
-  //   const changeSort = (value) => {
-  //     setUser((prev) => (prev ? { ...prev, sortBy: value } : prev));
-  //   };
 };
-
-// Complete this ....

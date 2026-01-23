@@ -1,0 +1,6 @@
+export const SORTERS = {
+    PRIORITY:"PRIORITY",
+    TYPE:"TYPE",
+    DUE_DATE:"DUE_DATE",
+    DEFAULT:"DEFAULT",
+}

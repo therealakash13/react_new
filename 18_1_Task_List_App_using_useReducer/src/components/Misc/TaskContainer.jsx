@@ -1,36 +1,38 @@
 import { useContext } from "react";
-// import { AuthContext } from "../../context/AuthContext";
+import { TaskContext } from "../../context/TaskContext";
 import ActiveTask from "../Tasks/ActiveTask";
 import NewTask from "../Tasks/NewTask";
 import CompletedTask from "../Tasks/CompletedTask";
 import FailedTask from "../Tasks/FailedTask";
+
 import { taskSorter } from "../../utils/taskUtils";
-import { TaskContext } from "../../context/TaskContext";
+import { SET_TASK_REMOVAL, SET_TASK_STATUS } from "../../context/actions";
 
 export default function TaskContainer() {
-  const { user } = useContext(AuthContext);
-  // const { handleTaskStatus, handleTaskRemoval, getEmployeeTasks } =
-  //   useContext(TaskContext);
+  const { state, dispatch } = useContext(TaskContext);
 
-  const tasks = getEmployeeTasks(user.email, user.id);
-  const sortedTasks = taskSorter(tasks, user.sortBy);
+  const getEmployeeTasks = (email, id) => {
+    const employee = state.tasks.employees.find(
+      (e) => e.email === email || e.id === id,
+    );
 
-  const handleRemoval = (taskId) => {
-    if (!user || user.role !== "employee") {
-      alert("Unauthorized.");
-      return;
-    }
+    if (!employee) return [];
+    return employee.tasks;
+  };
 
-    handleTaskRemoval(user.email, taskId);
+  const tasks = getEmployeeTasks(state.auth.currentUser?.email, state.auth.currentUser?.id);
+  const sortedTasks = taskSorter(tasks, state.ui.sortBy);
+
+  const handleRemoval = (taskId,taskTitle) => {
+    if (!state.auth.currentUser || state.auth.currentUser.role !== "employee") return alert("Unauthorized.");
+
+    const requestedAt  = new Date().toISOString().split("T")[0];    
+    dispatch({ type:SET_TASK_REMOVAL, payload:{ taskId,  requestedAt, employeeId: state.auth.currentUser?.id, taskTitle } });
   };
 
   const handleStatus = (taskId, status) => {
-    if (!user || user.role !== "employee") {
-      alert("Unauthorized.");
-      return;
-    }
-
-    handleTaskStatus(user.email, taskId, status);
+    if (!state.auth.currentUser || state.auth.currentUser.role !== "employee") return alert("Unauthorized.");
+    dispatch({ type: SET_TASK_STATUS ,payload:{ taskId, status } });
   };
 
   return (

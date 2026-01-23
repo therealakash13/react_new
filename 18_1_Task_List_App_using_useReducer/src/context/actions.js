@@ -3,3 +3,7 @@ export const ADD_TASK = "ADD_TASK";
 export const UPDATE_TASK_STATUS = "UPDATE_TASK_STATUS";
 export const LOGOUT = "LOGOUT";
 export const GET_REMOVAL_REQ = "GET_REMOVAL_REQ";
+export const APPROVE_TASK_REMOVAL = "APPROVE_TASK_REMOVAL";
+export const CHANGE_SORT = "CHANGE_SORT";
+export const SET_TASK_STATUS = "SET_TASK_STATUS";
+export const SET_TASK_REMOVAL = "SET_TASK_REMOVAL";
