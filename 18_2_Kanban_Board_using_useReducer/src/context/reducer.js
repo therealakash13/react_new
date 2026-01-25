@@ -1,4 +1,4 @@
-import { ADD_TASK } from "./action";
+import { ADD_TASK, MOVE_TASK } from "./action";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -11,7 +11,15 @@ export const reducer = (state, action) => {
         },
       };
     }
+
+    case MOVE_TASK: {
+      console.log(action.payload);
+      return state;
+    }
+
+    default:
+      return state;
   }
 };
 
-// Make ui and add more actions
+// add more actions
