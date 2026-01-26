@@ -1,4 +1,4 @@
-import { ADD_TASK, MOVE_TASK } from "./action";
+import { ADD_TASK, DELETE_TASK, EDIT_TASK, MOVE_TASK } from "./action";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -13,8 +13,47 @@ export const reducer = (state, action) => {
     }
 
     case MOVE_TASK: {
-      console.log(action.payload);
-      return state;
+      const { taskId, from, to } = action.payload;
+
+      const task = state.tasks[from].find((t) => t.id === taskId);
+      if (!task) return state;
+
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [from]: state.tasks[from].filter((t) => t.id !== taskId),
+          [to]: [...state.tasks[to], task],
+        },
+      };
+    }
+
+    case DELETE_TASK: {
+      const { from, taskId } = action.payload;
+
+      if (!state.tasks[from]) return state;
+
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [from]: state.tasks[from].filter((t) => t.id !== taskId),
+        },
+      };
+    }
+
+    case EDIT_TASK: {
+      const { from, taskId, title } = action.payload;
+
+      return {  
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [from]: state.tasks[from].map((task) =>
+            task.id === taskId ? { ...task, title } : task,
+          ),
+        },
+      };
     }
 
     default:
