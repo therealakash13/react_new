@@ -1,6 +1,55 @@
-import { ADD_TASK, DELETE_TASK, EDIT_TASK, MOVE_TASK } from "./action";
+import {
+  ADD_TASK,
+  DELETE_TASK,
+  EDIT_TASK,
+  MOVE_TASK,
+  REDO,
+  UNDO,
+} from "./action";
 
 export const reducer = (state, action) => {
+  const { past, present, future } = state;
+
+  switch (action.type) {
+    case UNDO: {
+      if (!past.length) return state;
+
+      const previous = past[past.length - 1];
+
+      return {
+        past: past.slice(0, -1),
+        present: previous,
+        future: [present, ...future],
+      };
+    }
+
+    case REDO: {
+      if (!future.length) return state;
+
+      const next = future[0];
+
+      return {
+        past: [...past, present],
+        present: next,
+        future: future.slice(1),
+      };
+    }
+
+    default: {
+      const newPresent = appReducer(present, action);
+
+      if (newPresent === present) return state;
+
+      return {
+        past: [...past, present],
+        present: newPresent,
+        future: [],
+      };
+    }
+  }
+};
+
+const appReducer = (state, action) => {
   switch (action.type) {
     case ADD_TASK: {
       return {
@@ -31,8 +80,6 @@ export const reducer = (state, action) => {
     case DELETE_TASK: {
       const { from, taskId } = action.payload;
 
-      if (!state.tasks[from]) return state;
-
       return {
         ...state,
         tasks: {
@@ -45,7 +92,7 @@ export const reducer = (state, action) => {
     case EDIT_TASK: {
       const { from, taskId, title } = action.payload;
 
-      return {  
+      return {
         ...state,
         tasks: {
           ...state.tasks,
@@ -60,5 +107,3 @@ export const reducer = (state, action) => {
       return state;
   }
 };
-
-// add more actions

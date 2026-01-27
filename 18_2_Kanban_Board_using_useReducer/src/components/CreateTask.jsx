@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TaskContext } from "../context/TaskContext";
-import { ADD_TASK } from "../context/action";
+import { ADD_TASK, REDO, UNDO } from "../context/action";
 import { useContext } from "react";
 import { nanoid } from "nanoid";
 
@@ -47,6 +47,18 @@ export default function CreateTask() {
         className="px-5 py-3 bg-green-600 text-white font-semibold rounded cursor-pointer"
       >
         Create Task
+      </button>
+      <button
+        onClick={() => dispatch({ type: UNDO })}
+        className="bg-red-600 px-5 font-semibold text-white rounded-full cursor-pointer"
+      >
+        UNDO
+      </button>
+      <button
+        onClick={() => dispatch({ type: REDO })}
+        className="bg-green-800 px-5 font-semibold text-white rounded-full cursor-pointer"
+      >
+        REDO
       </button>
     </div>
   );

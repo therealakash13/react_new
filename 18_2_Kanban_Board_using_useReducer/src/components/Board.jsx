@@ -7,9 +7,13 @@ export default function Board() {
 
   return (
     <div className="flex flex-1 w-full gap-6 p-6 h-2/3">
-      <Column title="Todo" status="todo" tasks={state.tasks.todo} />
-      <Column title="In Progress" status="inProgress" tasks={state.tasks.inProgress} />
-      <Column title="Done" status="done" tasks={state.tasks.done} />
+      <Column title="Todo" status="todo" tasks={state.present.tasks.todo} />
+      <Column
+        title="In Progress"
+        status="inProgress"
+        tasks={state.present.tasks.inProgress}
+      />
+      <Column title="Done" status="done" tasks={state.present.tasks.done} />
     </div>
   );
 }
